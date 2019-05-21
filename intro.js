@@ -1281,7 +1281,7 @@
       tooltipLayer.appendChild(buttonsLayer);
 
       //set proper position
-      _placeTooltip.call(self, targetElement.element, tooltipLayer, arrowLayer, helperNumberLayer, targetElement.defaultWidth);
+      _placeTooltip.call(self, targetElement.element, tooltipLayer, arrowLayer, helperNumberLayer, undefined, targetElement.defaultWidth);
 
       // change the scroll of the window, if needed
       _scrollTo.call(this, targetElement.scrollTo, targetElement, tooltipLayer);
