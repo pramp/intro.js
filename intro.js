@@ -2236,10 +2236,7 @@
     var docEl = document.documentElement;
     var scrollTop = window.pageYOffset || docEl.scrollTop || body.scrollTop;
     var scrollLeft = window.pageXOffset || docEl.scrollLeft || body.scrollLeft;
-    var x = element.getBoundingClientRect();
-    if (top !== self) {
-      x = element.ownerDocument.defaultView.frameElement.getBoundingClientRect()
-    }
+    var x = document.getElementById('staticBoundingRect').getBoundingClientRect();
     return {
       top: x.top + scrollTop,
       width: x.width,
