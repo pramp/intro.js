@@ -589,7 +589,7 @@
    * @param {HTMLElement} helperNumberLayer
    * @param {Boolean} hintMode
    */
-  function _placeTooltip(targetElement, tooltipLayer, arrowLayer, helperNumberLayer, hintMode) {
+  function _placeTooltip(targetElement, tooltipLayer, arrowLayer, helperNumberLayer, hintMode, defaultWidth) {
     var tooltipCssClass = '',
         currentStepObj,
         tooltipOffset,
@@ -637,7 +637,7 @@
 
     var tooltipLayerStyleLeft;
     targetOffset  = _getOffset(targetElement);
-    tooltipOffset = _getOffsetPatch(tooltipLayer);
+    tooltipOffset = _getOffset(tooltipLayer, defaultWidth);
     windowSize    = _getWinSize();
 
     _addClass(tooltipLayer, 'introjs-' + currentTooltipPosition);
@@ -1281,7 +1281,7 @@
       tooltipLayer.appendChild(buttonsLayer);
 
       //set proper position
-      _placeTooltip.call(self, targetElement.element, tooltipLayer, arrowLayer, helperNumberLayer);
+      _placeTooltip.call(self, targetElement.element, tooltipLayer, arrowLayer, helperNumberLayer, targetElement.defaultWidth);
 
       // change the scroll of the window, if needed
       _scrollTo.call(this, targetElement.scrollTo, targetElement, tooltipLayer);
@@ -2231,15 +2231,19 @@
    * @param {Object} element
    * @returns Element's position info
    */
-  function _getOffset(element) {
+  function _getOffset(element, defaultWidth) {
     var body = document.body;
     var docEl = document.documentElement;
     var scrollTop = window.pageYOffset || docEl.scrollTop || body.scrollTop;
     var scrollLeft = window.pageXOffset || docEl.scrollLeft || body.scrollLeft;
     var x = element.getBoundingClientRect();
+    var width = x.width;
+    if (defaultWidth) {
+      width = defaultWidth
+    }
     return {
       top: x.top + scrollTop,
-      width: x.width,
+      width: width,
       height: x.height,
       left: x.left + scrollLeft
     };
