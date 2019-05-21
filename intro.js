@@ -637,7 +637,7 @@
 
     var tooltipLayerStyleLeft;
     targetOffset  = _getOffset(targetElement);
-    tooltipOffset = _getOffset(tooltipLayer);
+    tooltipOffset = _getOffsetPatch(tooltipLayer);
     windowSize    = _getWinSize();
 
     _addClass(tooltipLayer, 'introjs-' + currentTooltipPosition);
@@ -2236,10 +2236,24 @@
     var docEl = document.documentElement;
     var scrollTop = window.pageYOffset || docEl.scrollTop || body.scrollTop;
     var scrollLeft = window.pageXOffset || docEl.scrollLeft || body.scrollLeft;
-    var x = document.getElementById('staticBoundingRect').getBoundingClientRect();
+    var x = element.getBoundingClientRect();
     return {
       top: x.top + scrollTop,
       width: x.width,
+      height: x.height,
+      left: x.left + scrollLeft
+    };
+  }
+
+  function _getOffsetPatch(element) {
+    var body = document.body;
+    var docEl = document.documentElement;
+    var scrollTop = window.pageYOffset || docEl.scrollTop || body.scrollTop;
+    var scrollLeft = window.pageXOffset || docEl.scrollLeft || body.scrollLeft;
+    var x = element.getBoundingClientRect();
+    return {
+      top: x.top + scrollTop,
+      width: document.body.getBoundingClientRect().width,
       height: x.height,
       left: x.left + scrollLeft
     };
