@@ -2232,18 +2232,34 @@
    * @returns Element's position info
    */
   function _getOffset(element) {
-    var body = document.body;
-    var docEl = document.documentElement;
-    var scrollTop = window.pageYOffset || docEl.scrollTop || body.scrollTop;
-    var scrollLeft = window.pageXOffset || docEl.scrollLeft || body.scrollLeft;
-    var x = element.getBoundingClientRect();
-    return {
-      top: x.top + scrollTop,
-      width: x.width,
-      height: x.height,
-      left: x.left + scrollLeft
+    var elementPosition = {};
+    //iframe workaround - dummy client rect here
+    var boundingFrameClientRect = {
+          top: 0,
+          left: 0
     };
-  }
+    if ((element) && (element.ownerDocument !== window.document)) { //lives in iframe
+          boundingFrameClientRect = element.ownerDocument.defaultView.frameElement.getBoundingClientRect()
+    }
+    //set width
+    elementPosition.width = element.offsetWidth;
+    //set height
+    elementPosition.height = element.offsetHeight;
+    //calculate element top and left
+    var _x = 0;
+    var _y = 0;
+    while (element && !isNaN(element.offsetLeft) && !isNaN(element.offsetTop)) {
+          _x += element.offsetLeft;
+          _y += element.offsetTop;
+          element = element.offsetParent;
+    }
+    //set top
+    elementPosition.top = _y + boundingFrameClientRect.top;     //account for elements within a frame
+    //set left
+    elementPosition.left = _x + boundingFrameClientRect.left;     //account for elements within a frame
+
+    return elementPosition;
+}
 
   /**
   * Find the nearest scrollable parent
