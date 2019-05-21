@@ -490,7 +490,7 @@
       var oldHelperNumberLayer = document.querySelector('.introjs-helperNumberLayer'),
         oldArrowLayer        = document.querySelector('.introjs-arrow'),
         oldtooltipContainer  = document.querySelector('.introjs-tooltip');
-      _placeTooltip.call(this, this._introItems[this._currentStep].element, oldtooltipContainer, oldArrowLayer, oldHelperNumberLayer);
+      _placeTooltip.call(this, this._introItems[this._currentStep].element, oldtooltipContainer, oldArrowLayer, oldHelperNumberLayer, undefined, this._introItems[this._currentStep].defaultWidth);
     }
 
     //re-align hints
@@ -1090,7 +1090,7 @@
         oldtooltipLayer.innerHTML = targetElement.intro;
         //set the tooltip position
         oldtooltipContainer.style.display = "block";
-        _placeTooltip.call(self, targetElement.element, oldtooltipContainer, oldArrowLayer, oldHelperNumberLayer);
+        _placeTooltip.call(self, targetElement.element, oldtooltipContainer, oldArrowLayer, oldHelperNumberLayer, undefined, targetElement.defaultWidth);
 
         //change active bullet
         if (self._options.showBullets) {
