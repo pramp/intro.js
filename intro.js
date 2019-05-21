@@ -2238,7 +2238,7 @@
           top: 0,
           left: 0
     };
-    if ((element) && (element.ownerDocument !== window.document)) { //lives in iframe
+    if ((element) && (self !== top)) { //lives in iframe
           boundingFrameClientRect = element.ownerDocument.defaultView.frameElement.getBoundingClientRect()
     }
     //set width
